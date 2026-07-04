@@ -1,0 +1,46 @@
+{
+  "summary": "End-to-end testing of Origem Dental Clinic landing page + appointments API. Frontend: all 10 flows pass (hero headline/image, nav smooth-scroll, hero CTAs, Tratamentos hover reveal, Depoimentos dot switching, empty-form error toast, successful form submission with success state + toast + backend persistence). Backend: 7/9 pytest tests pass — critical bug found: POST /api/appointments and GET /api/appointments expose Mongo `_id` (raw ObjectId string) instead of the documented `id` field. Contract in review request says 'returns the saved object with an id' but response returns `_id`.",
+  "backend_issues": {
+    "critical": [
+      {
+        "endpoint": "POST /api/appointments, GET /api/appointments",
+        "issue": "Response exposes internal Mongo `_id` (ObjectId serialized as string) instead of `id`. The Appointment Pydantic model has `id: Optional[PyObjectId] = Field(default=None, alias='_id')` and FastAPI serializes with by_alias=True by default, so clients see `_id` and no `id` key. Violates code-review rule 'MongoDB ObjectId - Always exclude mongodb objectId _id' and the stated API contract. Fix: either (a) add `response_model_by_alias=False` to both @api_router routes for /appointments, or (b) restructure Appointment model to store `id: Optional[str] = None` (mapped from `_id` via a validator/`@field_validator('id', mode='before')` on load) with no alias, and drop `_id` from serialization output.",
+        "priority": "HIGH"
+      }
+    ],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/backend_test.py",
+    "/app/test_reports/pytest/pytest_results.xml"
+  ],
+  "action_items": [
+    "Fix backend appointment response serialization so it returns `id` (string) instead of `_id`. Suggested: change route decorators to `@api_router.post('/appointments', response_model=Appointment, response_model_by_alias=False)` and same for GET, or drop the alias on the id field.",
+    "After the fix, re-run: pytest /app/backend/tests/backend_test.py -v"
+  ],
+  "critical_code_review_comments": [
+    "server.py: Appointment model exposes `_id` via alias — API leaks Mongo internals. See action item.",
+    "server.py: `Appointment` model is also used to validate DB reads AND serialize responses; `AppointmentCreate` is separate which is good, but the response model reuses the DB shape. Consider a dedicated `AppointmentOut` if internal fields ever expand.",
+    "server.py: `on_event('shutdown')` is deprecated in modern FastAPI (use lifespan). Non-blocking.",
+    "ChamadaFinal.jsx: axios error handler swallows validation errors (always shows generic toast). Consider surfacing 422 detail messages.",
+    "ChamadaFinal.jsx: `required` attributes trigger native HTML5 validation, so the JS-level required check + toast only fires if the native validation is bypassed — the manual guard is effectively dead code in normal browser flow. Not a bug, but redundant."
+  ],
+  "updated_files": [
+    "/app/backend/tests/backend_test.py"
+  ],
+  "success_rate": {
+    "backend": "78% (7/9)",
+    "frontend": "100% (10/10 flows)"
+  },
+  "test_credentials": "N/A — public landing page, no auth.",
+  "seed_data_creation": "Created a few appointments in MongoDB via POST /api/appointments with TEST_* prefix during backend and UI submit tests (emails: test_maria@example.pt, test_joao@example.pt, test_list_check@example.pt, test_ui_flow@example.pt).",
+  "retest_needed": true,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Frontend is fully working. Only backend response schema needs fixing (id vs _id). Reuse /app/backend/tests/backend_test.py — the two failing tests will pass once `_id` is replaced with `id` in responses. UI tests can be replayed against the ChamadaFinal form using data-testids listed in the review request.",
+  "rca of the issue": "Pydantic v2 field `id` with `alias='_id'` combined with FastAPI's default `response_model_by_alias=True` causes the serializer to emit `_id` instead of `id`. `populate_by_name=True` only affects INPUT parsing, not output serialization. Two-line fix: set `response_model_by_alias=False` on both /appointments routes, OR add `model_config = ConfigDict(..., serialize_by_alias=False)` (Pydantic 2.x) and rely on FastAPI's alias behavior — the cleanest is passing the flag on the route decorator."
+}

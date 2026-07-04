@@ -1,54 +1,43 @@
-import { useEffect } from "react";
 import "@/App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import axios from "axios";
-import { HOME } from "@/constants/testIds";
+import { Toaster } from "@/components/ui/sonner";
+import useSmoothScroll from "@/hooks/useSmoothScroll";
+import Navbar from "@/components/sections/Navbar";
+import Hero from "@/components/sections/Hero";
+import Atmosfera from "@/components/sections/Atmosfera";
+import Filosofia from "@/components/sections/Filosofia";
+import Tratamentos from "@/components/sections/Tratamentos";
+import Jornada from "@/components/sections/Jornada";
+import Depoimentos from "@/components/sections/Depoimentos";
+import ChamadaFinal from "@/components/sections/ChamadaFinal";
+import Footer from "@/components/sections/Footer";
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
+function App() {
+  useSmoothScroll();
 
-const Home = () => {
-  const helloWorldApi = async () => {
-    try {
-      const response = await axios.get(`${API}/`);
-      console.log(response.data.message);
-    } catch (e) {
-      console.error(e, `errored out requesting / api`);
+  const scrollTo = (id) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    if (window.__lenis) {
+      window.__lenis.scrollTo(el, { offset: id === "hero" ? 0 : -60 });
+    } else {
+      el.scrollIntoView({ behavior: "smooth" });
     }
   };
 
-  useEffect(() => {
-    helloWorldApi();
-  }, []);
-
-  return (
-    <div>
-      <header className="App-header">
-        <a
-          data-testid={HOME.emergentLink}
-          className="App-link"
-          href="https://emergent.sh"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <img src="https://avatars.githubusercontent.com/in/1201222?s=120&u=2686cf91179bbafbc7a71bfbc43004cf9ae1acea&v=4" />
-        </a>
-        <p className="mt-5">Building something incredible ~!</p>
-      </header>
-    </div>
-  );
-};
-
-function App() {
   return (
     <div className="App">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />}>
-            <Route index element={<Home />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      <Navbar onScrollTo={scrollTo} />
+      <main>
+        <Hero onScrollTo={scrollTo} />
+        <Atmosfera />
+        <Filosofia />
+        <Tratamentos />
+        <Jornada />
+        <Depoimentos />
+        <ChamadaFinal />
+      </main>
+      <Footer onScrollTo={scrollTo} />
+      <Toaster position="top-center" />
     </div>
   );
 }
