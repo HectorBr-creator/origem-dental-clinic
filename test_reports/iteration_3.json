@@ -1,0 +1,33 @@
+{
+  "summary": "Regression verification after react-day-picker upgrade 8.10.1 -> 9.8.0 (React 19 compatible) and calendar.jsx rewrite for v9 API. All flows still pass: (1) landing page loads with hero headline 'O cuidado dentário deve ser tão confortável quanto o resultado.' and hero image; (2) appointment form end-to-end works (fill -> submit -> form-success + success toast); (3) POST /api/appointments returns 'id' (no '_id') with status 'novo'; GET /api/appointments returns list with 'id' only; (4) #agendar and #atmosfera anchors exist and CTAs scroll to them; (5) no console errors on the landing page. Backend pytest: 9/9 passed. calendar.jsx is not imported at runtime by the app (grep-verified), so the v9 rewrite has no user-visible impact - only guarantees build stays green.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/backend_test.py",
+    "/app/test_reports/pytest/pytest_results.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "calendar.jsx: v9 rewrite looks correct (uses month_caption/weekdays/week/day_button/components.Chevron slots). Not imported anywhere in the app, so it's dead code kept only to preserve shadcn compatibility. Consider removing if not needed, or adding a smoke unit test to ensure it doesn't silently break on future react-day-picker upgrades.",
+    "Carried over from iteration_2 (not addressed): server.py still uses deprecated @app.on_event('shutdown') - migrate to lifespan handler.",
+    "Carried over from iteration_2 (not addressed): consider dedicated AppointmentOut response schema so response_model_by_alias=False isn't needed per-route."
+  ],
+  "updated_files": [],
+  "success_rate": {
+    "backend": "100% (9/9)",
+    "frontend": "100% (all regression flows pass)"
+  },
+  "test_credentials": "N/A - public landing page, no auth.",
+  "seed_data_creation": "Added one TEST_ appointment via UI submit (email pattern test_reg_<timestamp>@example.pt) and several TEST_* rows via pytest run. Safe to purge by email prefix if desired.",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "react-day-picker 9.8.0 + date-fns 3.6.0 + react 19.0.0 combo is verified safe. calendar.jsx (v9 API) is unused at runtime - app uses native <input type='date'> for the appointment form date field. Backend endpoints /api/appointments (POST/GET) both return 'id' and no '_id'. Reuse /app/backend/tests/backend_test.py.",
+  "rca of the issue": "N/A - regression run only, no bugs found."
+}
