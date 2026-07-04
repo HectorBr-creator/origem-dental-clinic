@@ -60,7 +60,7 @@ async def root():
     return {"message": "Origem Dental Clinic API"}
 
 
-@api_router.post("/appointments", response_model=Appointment)
+@api_router.post("/appointments", response_model=Appointment, response_model_by_alias=False)
 async def create_appointment(payload: AppointmentCreate):
     doc = payload.model_dump()
     doc["status"] = "novo"
