@@ -1,0 +1,130 @@
+{
+  "theme_and_archetype": {
+    "domain": "Luxury Dental Clinic / Wellness",
+    "theme": "LIGHT",
+    "archetype": "Organic & Earthy meets Luxury (Archetype 1 & 5 blend)",
+    "mood": "Serenidade, Confiança, Exclusividade, Elegância, Cuidado humano, Tecnologia discreta",
+    "inspiration": "Private luxury clinics, premium spas, boutique hotels, minimalist contemporary architecture"
+  },
+  "colors": {
+    "primary": "#214A3B",
+    "primary_description": "Verde profundo elegante. Use for primary CTAs, key highlighting, and deep-toned section backgrounds.",
+    "secondary": "#FFFFFF",
+    "secondary_description": "Branco puro. Dominant background color to provide immense whitespace and breathable layout.",
+    "text_primary": "#1A1A1A",
+    "text_primary_description": "Preto suave. Use for all main headings and body text to maintain sharp contrast and readability.",
+    "details": "#C7C7C7",
+    "details_description": "Cinza prata muito subtil. Use for subtle borders (1px solid), minimal dividers, and understated structural elements.",
+    "avoid": ["azul hospitalar", "vermelhos", "cores saturadas", "gradientes exagerados"]
+  },
+  "typography": {
+    "heading_font": "Cormorant Garamond",
+    "heading_fallback": "serif",
+    "heading_strategy": "Sophisticated, distinctive editorial serif. Gives a premium, high-end editorial feel.",
+    "body_font": "Outfit",
+    "body_fallback": "sans-serif",
+    "body_strategy": "Clean, geometric sans-serif that pairs beautifully with editorial serifs without competing.",
+    "scales": {
+      "h1": "text-5xl md:text-6xl lg:text-7xl font-light tracking-tight leading-none",
+      "h2": "text-4xl md:text-5xl font-light tracking-tight leading-tight",
+      "h3": "text-2xl md:text-3xl font-normal tracking-tight",
+      "body_large": "text-lg md:text-xl font-light leading-relaxed tracking-wide",
+      "body": "text-base font-light leading-relaxed",
+      "overline": "text-xs uppercase tracking-[0.2em] font-medium text-[#214A3B]"
+    }
+  },
+  "layout_and_spacing": {
+    "philosophy": "Ultra minimalist, editorial, lots of whitespace. Treat the screen like a high-end magazine spread.",
+    "section_padding": "py-24 md:py-32 lg:py-40",
+    "container": "max-w-7xl mx-auto px-6 md:px-12",
+    "border_radius": "rounded-none md:rounded-sm",
+    "border_strategy": "Use 1px solid #C7C7C7 for structural separation instead of drop shadows. No heavy boxes."
+  },
+  "motion_and_interaction": {
+    "scrolling": "Smooth scrolling using Lenis is MANDATORY to convey a premium, unhurried feel.",
+    "entrance": "Subtle, slow fade-ins and slight vertical translates (y: 20) on scroll using Framer Motion.",
+    "hover_states": "Elegant and deliberate. For treatment cards: hover reveals descriptions with smooth opacity/height transitions. Image scales slightly (1.05) within hidden overflow containers."
+  },
+  "sections_and_components": {
+    "Header": {
+      "description": "Sticky header with glassmorphism (backdrop-blur-xl bg-white/80). Minimalist layout.",
+      "elements": "Logo text ('Origem') in Cormorant Garamond. Clean navigation links. Primary CTA ('Marcar Avaliação') in #214A3B."
+    },
+    "Hero": {
+      "layout": "Full viewport height (min-h-screen). Large clinic interior photo as background with a subtle overlay (e.g., bg-black/20) to ensure text readability without dulling the image.",
+      "copy": {
+        "headline": "O cuidado dentário deve ser tão confortável quanto o resultado.",
+        "subheadline": "Na Origem Dental Clinic, cada detalhe foi pensado para que a sua experiência seja tranquila, personalizada e excecional.",
+        "primary_btn": "Marcar Avaliação",
+        "secondary_btn": "Conhecer a Clínica"
+      },
+      "styling": "Headline centered or starkly left-aligned. High-end editorial typography."
+    },
+    "Atmosfera": {
+      "layout": "Side-by-side or asymmetrical grid (Tetris grid). Large, high-quality imagery of the space.",
+      "styling": "Whitespace heavy. Text blocks should have massive padding to feel detached and floating like in an art gallery."
+    },
+    "Filosofia": {
+      "layout": "Photo and text side-by-side. Consider a background shift to the primary color (#214A3B) with white text to create pacing and depth.",
+      "styling": "Large body text for the philosophy statement. High contrast."
+    },
+    "Tratamentos": {
+      "layout": "Grid of premium cards (Implantes, Ortodontia, Estética Dentária, Reabilitação Oral).",
+      "styling": "Cards should have a 1px border (#C7C7C7). NO shadows. On hover, a description smoothly reveals from the bottom or fades in. Very architectural and crisp."
+    },
+    "Jornada_do_Paciente": {
+      "layout": "5-step visual journey. Can be a vertical timeline using a delicate 1px line (#C7C7C7) connecting nodes, or a horizontal scrollable area.",
+      "styling": "Nodes should be subtle. Typography must lead the visual hierarchy."
+    },
+    "Depoimentos": {
+      "layout": "Sophisticated slider or masonry. NO heavy boxes. NO giant yellow stars.",
+      "styling": "Text-driven. Use a large, elegant quotation mark. Author name in uppercase serif."
+    },
+    "Chamada_Final": {
+      "layout": "Emotional final CTA section. Extremely minimal. Perhaps just a serene background image with text.",
+      "copy": "Functional appointment/contact form integrated elegantly or a strong button."
+    },
+    "Footer": {
+      "layout": "Clean, structured grid.",
+      "styling": "Phone, WhatsApp, Address, Socials clearly laid out. Dark (#1A1A1A) or primary (#214A3B) background with light text, massive top and bottom padding."
+    }
+  },
+  "image_urls": [
+    {
+      "category": "Hero/Atmosfera",
+      "url": "https://images.unsplash.com/photo-1781513144825-aa1e284c5950?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2NDF8MHwxfHNlYXJjaHwzfHxsdXh1cnklMjBzcGElMjBjbGluaWMlMjBpbnRlcmlvciUyMGFyY2hpdGVjdHVyZSUyMG1pbmltYWx8ZW58MHx8fHwxNzgzMTU2MDg3fDA&ixlib=rb-4.1.0&q=85",
+      "description": "Modern white reception area with curved lines and glass partitions. Perfect for hero or atmosphere."
+    },
+    {
+      "category": "Atmosfera",
+      "url": "https://images.unsplash.com/photo-1759262151080-e05ba1c6294f?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2NDF8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBzcGElMjBjbGluaWMlMjBpbnRlcmlvciUyMGFyY2hpdGVjdHVyZSUyMG1pbmltYWx8ZW58MHx8fHwxNzgzMTU2MDg3fDA&ixlib=rb-4.1.0&q=85",
+      "description": "Woman sitting in a modern waiting room reading. Conveys serenity."
+    },
+    {
+      "category": "Clinic/Tratamentos",
+      "url": "https://images.unsplash.com/photo-1782397132123-0166b524d6bc?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2NDN8MHwxfHNlYXJjaHwxfHxkZW50YWwlMjBjYXJlJTIwcHJlbWl1bSUyMG1pbmltYWxpc3R8ZW58MHx8fHwxNzgzMTU2MDg3fDA&ixlib=rb-4.1.0&q=85",
+      "description": "Clean, modern medical examination room. Represents clinical excellence in a minimal space."
+    },
+    {
+      "category": "Filosofia/Depoimentos",
+      "url": "https://images.unsplash.com/photo-1489278353717-f64c6ee8a4d2?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NzR8MHwxfHNlYXJjaHwxfHxzZXJlbmUlMjB3b21hbiUyMGJlYXV0aWZ1bCUyMHNtaWxlJTIwbmF0dXJhbHxlbnwwfHx8fDE3ODMxNTYwODd8MA&ixlib=rb-4.1.0&q=85",
+      "description": "Close-up of a serene woman with a beautiful, natural smile. Humanizes the clinic."
+    },
+    {
+      "category": "Depoimentos",
+      "url": "https://images.unsplash.com/photo-1562337404-3044c84ac061?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NzR8MHwxfHNlYXJjaHwzfHxzZXJlbmUlMjB3b21hbiUyMGJlYXV0aWZ1bCUyMHNtaWxlJTIwbmF0dXJhbHxlbnwwfHx8fDE3ODMxNTYwODd8MA&ixlib=rb-4.1.0&q=85",
+      "description": "Black and white or muted image of a smiling woman, great for philosophy or patient stories."
+    }
+  ],
+  "instructions_to_main_agent": [
+    "Strictly adhere to the requested exact hex codes for the color palette.",
+    "Use 'Cormorant Garamond' for headings and 'Outfit' for body text. Include these from Google Fonts.",
+    "Enforce ultra-minimalist layout: do NOT use standard drop shadows (shadow-md, etc.) on cards. Use 1px borders of #C7C7C7 and whitespace for separation.",
+    "Ensure all interactive elements and key informational elements have a 'data-testid' attribute (e.g., data-testid='hero-primary-cta').",
+    "Implement Lenis for smooth scrolling and Framer Motion for subtle entry animations.",
+    "The Tratamentos cards MUST feature a hover reveal for the descriptions to maintain a clean initial view.",
+    "Avoid using the 'card' component from shadcn if it enforces shadows/rounded corners that conflict with this architectural, flat, 1px-border aesthetic. Build custom structural divs instead.",
+    "Use standard raw HTML and Tailwind for complex, overlapping, or highly specific editorial layouts (e.g., Hero, Atmosfera).",
+    "Only use Lucide-react or Phosphor icons, kept minimal and thin (stroke-width 1 or 1.5)."
+  ]
+}
