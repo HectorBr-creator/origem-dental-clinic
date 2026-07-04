@@ -1,0 +1,36 @@
+{
+  "summary": "Regression verification after date-fns 4.1.0 -> 3.6.0 downgrade. Frontend: landing page loads normally, hero headline + image visible, appointment form end-to-end works (fill -> submit -> form-success + toast + backend persistence), navbar/hero CTAs smooth-scroll to #agendar and #atmosfera. Backend: 9/9 pytest tests pass. POST /api/appointments returns 'id' (not '_id') with status 'novo'. Fixed a leftover from iteration_1: GET /api/appointments was still exposing '_id' because only POST had response_model_by_alias=False; added it to the GET route as well.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/backend_test.py",
+    "/app/test_reports/pytest/pytest_results.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "server.py line 73: GET /api/appointments was missing response_model_by_alias=False (only POST had it) so list responses leaked Mongo '_id'. Fixed by testing agent. Recommend adding a lint/test to catch similar drift on any new route using the Appointment model.",
+    "server.py: Consider introducing an AppointmentOut response schema (with plain 'id: str') so alias handling isn't required per-route; makes future routes safe by default.",
+    "server.py: @app.on_event('shutdown') still deprecated (use lifespan). Non-blocking, carried over from iteration_1."
+  ],
+  "updated_files": [
+    "/app/backend/server.py",
+    "/app/backend/tests/backend_test.py"
+  ],
+  "success_rate": {
+    "backend": "100% (9/9)",
+    "frontend": "100% (regression flows all pass)"
+  },
+  "test_credentials": "N/A - public landing page, no auth.",
+  "seed_data_creation": "Created a handful of TEST_* appointments in MongoDB via backend_test.py runs and UI submit (emails: test_regression_*, test_datefns_*, test_final_*, plus TEST_* rows from iteration_1). Safe to purge by email prefix if desired.",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "date-fns downgrade is verified safe - app uses native <input type='date'> in ChamadaFinal.jsx, so the react-day-picker peer dep chain does not affect runtime UI. Backend now consistently returns 'id' on both POST and GET /api/appointments. Reuse /app/backend/tests/backend_test.py for future regressions.",
+  "rca of the issue": "Not applicable - regression run only. The one small carry-over bug (GET returning '_id') was traced to server.py line 73 missing the response_model_by_alias=False flag that was present on the POST route. Root cause: two-route serialization config lives at route-decorator level instead of on the Pydantic model; any new route reusing Appointment must remember to set the flag. Suggested longer-term fix (recorded above): dedicated AppointmentOut schema."
+}

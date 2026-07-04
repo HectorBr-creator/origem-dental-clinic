@@ -70,7 +70,7 @@ async def create_appointment(payload: AppointmentCreate):
     return Appointment.model_validate(saved)
 
 
-@api_router.get("/appointments", response_model=List[Appointment])
+@api_router.get("/appointments", response_model=List[Appointment], response_model_by_alias=False)
 async def list_appointments():
     docs = await db.appointments.find().sort("created_at", -1).to_list(1000)
     return [Appointment.model_validate(d) for d in docs]
