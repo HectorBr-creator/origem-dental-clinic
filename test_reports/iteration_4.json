@@ -1,0 +1,23 @@
+{
+  "summary": "Regression verification after react-day-picker was COMPLETELY REMOVED (dependency uninstalled + src/components/ui/calendar.jsx deleted). All flows still pass: (1) landing page loads with hero headline 'O cuidado dentário deve ser tão confortável quanto o resultado.' and hero image visible, no console/page errors; (2) navbar #agendar link smooth-scrolls to appointment section; (3) #agendar and #atmosfera anchors exist; (4) appointment form end-to-end works — name/email/phone filled, treatment selected, native date input accepts '2026-03-15', submit -> form-success + success toast 'Pedido enviado. Entraremos em contacto em breve.'; (5) POST /api/appointments persists data (verified via GET) and returns 'id' (no '_id') with status 'novo'; (6) all 22 items in GET /api/appointments contain 'id' and no '_id'; (7) backend pytest 9/9 passed.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {"ui_bugs": [], "integration_issues": [], "design_issues": []},
+  "test_report_links": [
+    "/app/backend/tests/backend_test.py",
+    "/app/test_reports/pytest/pytest_results.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "Confirmed: react-day-picker no longer in package.json/yarn.lock; calendar.jsx deleted. Clean removal, no dead imports.",
+    "Carried over (not addressed, low priority): server.py still uses deprecated @app.on_event('shutdown') — migrate to lifespan handler.",
+    "Carried over (not addressed, low priority): consider a dedicated AppointmentOut response schema so response_model_by_alias=False isn't needed per-route."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "100% (9/9)", "frontend": "100% (all regression flows pass)"},
+  "test_credentials": "N/A - public landing page, no auth.",
+  "seed_data_creation": "One appointment added via UI submit (email test_reg_1783161072@example.pt) + pytest TEST_* rows. Safe to purge by email prefix if desired.",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "react-day-picker is fully removed (0 refs in yarn.lock/package.json/src). Appointment form uses native <input type='date' data-testid='input-date'>. Backend /api/appointments (POST/GET) both return 'id' and never '_id'. Reuse /app/backend/tests/backend_test.py. If running pytest, set REACT_APP_BACKEND_URL env var (test file reads it directly).",
+  "rca of the issue": "N/A - regression run only, no bugs found."
+}
